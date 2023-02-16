@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+#header {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    padding: 10px;
+}
+
+#result_table {
+    margin: 0 auto;
+    color: black;
+    background-color: white;
+}
+
+#color_table {
+    margin: 0 auto;
+}
+
+input {
+    width: 40px;
+}
+
+input[name="fg"],
+input[name="bg"] {
+    width: 60px;
+}
+
+input[name="fg2"],
+input[name="bg2"] {
+    width: 120px;
+}
+
+#footer p {
+    text-align: center;
+    padding: 50px;
+}
+
+
+.tb-wrap {
+    width: 100%;
+    overflow-x: scroll;
+}

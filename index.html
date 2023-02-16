@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>コントラストチェッカー</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <header id="header" class="wrapper">
+            <h1>コントラストチェッカー140</h1>
+            <p>背景色と文字色を重ねてコントラストをチェックするアプリです。<br>
+                W3Cが提案する基準値である「明度差125以上」「色差500以上」の場合にOKを表示します。<br>
+            </p>
+
+            <form id="form" name="fm">
+                <div class="tb-wrap">
+                    <table id="result_table" border="1">
+                        <tr>
+                            <th></th>
+                            <th>コード</th>
+                            <th>名前</th>
+                            <th>R</th>
+                            <th>G</th>
+                            <th>B</th>
+                            <th>明度</th>
+                            <th>明度差</th>
+                            <th>色差</th>
+                            <th>判定</th>
+                        </tr>
+                        <tr>
+                            <td>背景色</td>
+                            <td><input type="text" name="bg"></td>
+                            <td><input type="text" name="bg2"></td>
+                            <td><input type="text" name="bg_r"></td>
+                            <td><input type="text" name="bg_g"></td>
+                            <td><input type="text" name="bg_b"></td>
+                            <td><input type="text" name="bg_brightness"></td>
+                            <td rowspan="2"><input type="text" name="brightness_difference"></td>
+                            <td rowspan="2"><input type="text" name="color_difference"></td>
+                            <td id="result" rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>文字色</td>
+                            <td><input type="text" name="fg"></td>
+                            <td><input type="text" name="fg2"></td>
+                            <td><input type="text" name="fg_r"></td>
+                            <td><input type="text" name="fg_g"></td>
+                            <td><input type="text" name="fg_b"></td>
+                            <td><input type="text" name="fg_brightness"></td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </header>
+
+
+
+        <div class="tb-wrap">
+            <script type="text/javascript">
+                col = new Array(
+                    /* 赤 R FF-00-00 */
+                    "#FFE4E1", "mistyrose", 1,
+                    "#FFC0CB", "pink", 1,
+                    "#FFB6C1", "lightpink", 1,
+                    "#DB7093", "palevioletred", 1,
+                    "#F08080", "lightcoral", 1,
+                    "#CD5C5C", "indianred", 1,
+                    "#A52A2A", "brown", 0,
+                    "#800000", "maroon", 0,
+                    "#8B0000", "darkred", 0,
+                    "#B22222", "firebrick", 0,
+                    "#DC143C", "crimson", 0,
+                    "#FF0000", "red", 1,
+                    "#FF4500", "orangered", 1,
+                    "#FF6347", "tomato", 1,
+                    "#FA8072", "salmon", 1,
+                    "#FF7F50", "coral", 1,
+                    "#FFA07A", "lightsalmon", 1,
+                    "#E9967A", "darksalmon", 1,
+                    "#FFDAB9", "peachpuff", 1,
+                    "#FFE4C4", "bisque", 1,
+                    "#FFEBCD", "blanchedalmond", 1,
+                    "#FFEFD5", "papayawhip", 1,
+                    /* 橙 FF-80-00 */
+                    "#FFF5EE", "seashell", 1,
+                    "#FFFAFA", "snow", 1,
+                    "#FFFAF0", "floralwhite", 1,
+                    "#FDF5E6", "oldlace", 1,
+                    "#FAF0E6", "linen", 1,
+                    "#FAEBD7", "antiquewhite", 1,
+                    "#F5DEB3", "wheat", 1,
+                    "#FFE4B5", "moccasin", 1,
+                    "#FFDEAD", "navajowhite", 1,
+                    "#DEB887", "burlywood", 1,
+                    "#D2B48C", "tan", 1,
+                    "#BC8F8F", "rosybrown", 1,
+                    "#F4A460", "sandybrown", 1,
+                    "#CD853F", "peru", 1,
+                    "#FFA500", "orange", 1,
+                    "#FF8C00", "darkorange", 1,
+                    "#D2691E", "chocolate", 1,
+                    "#A0522D", "sienna", 0,
+                    "#8B4513", "saddlebrown", 0,
+                    /* 黄色 RG FF-FF-00 */
+                    "#B8860B", "darkgoldenrod", 1,
+                    "#DAA520", "goldenrod", 1,
+                    "#FFD700", "gold", 1,
+                    "#FFFF00", "yellow", 1,
+                    "#FFFACD", "lemonchiffon", 1,
+                    "#FFFFE0", "lightyellow", 1,
+                    "#FFFFF0", "ivory", 1,
+                    "#FFF8DC", "cornsilk", 1,
+                    "#FAFAD2", "lightgoldenrodyellow", 1,
+                    "#F5F5DC", "beige", 1,
+                    "#EEE8AA", "palegoldenrod", 1,
+                    "#F0E68C", "khaki", 1,
+                    "#BDB76B", "darkkhaki", 1,
+                    /* 緑 G 00-FF-00 */
+                    "#808000", "olive", 0,
+                    "#556B2F", "darkolivegreen", 0,
+                    "#6B8E23", "olivedrab", 0,
+                    "#9ACD32", "yellowgreen", 1,
+                    "#ADFF2F", "greenyellow", 1,
+                    "#7FFF00", "chartreuse", 1,
+                    "#7CFC00", "lawngreen", 1,
+                    "#00FF00", "lime", 1,
+                    "#32CD32", "limegreen", 1,
+                    "#228B22", "forestgreen", 0,
+                    "#008000", "green", 0,
+                    "#006400", "darkgreen", 0,
+                    "#2E8B57", "seagreen", 0,
+                    "#3CB371", "mediumseagreen", 1,
+                    "#8FBC8F", "darkseagreen", 1,
+                    "#66CDAA", "mediumaquamarine", 1,
+                    "#00FF7F", "springgreen", 1,
+                    "#00FA9A", "mediumspringgreen", 1,
+                    "#90EE90", "lightgreen", 1,
+                    "#98FB98", "palegreen", 1,
+                    "#7FFFD4", "aquamarine", 1,
+                    "#40E0D0", "turquoise", 1,
+                    "#48D1CC", "mediumturquoise", 1,
+                    "#20B2AA", "lightseagreen", 1,
+                    "#008B8B", "darkcyan", 0,
+                    /* 水色 GB 00-FF-FF */
+                    "#008080", "teal", 0,
+                    "#2F4F4F", "darkslategray", 0,
+                    "#5F9EA0", "cadetblue", 1,
+                    "#00CED1", "darkturquoise", 1,
+                    "#00FFFF", "cyan", 1,
+                    "#00FFFF", "aqua", 1,
+                    "#E0FFFF", "lightcyan", 1,
+                    "#F0FFF0", "honeydew", 1,
+                    "#F0FFFF", "azure", 1,
+                    "#F5FFFA", "mintcream", 1,
+                    "#F0F8FF", "aliceblue", 1,
+                    "#AFEEEE", "paleturquoise", 1,
+                    "#B0E0E6", "powderblue", 1,
+                    "#ADD8E6", "lightblue", 1,
+                    "#87CEFA", "lightskyblue", 1,
+                    "#87CEEB", "skyblue", 1,
+                    "#00BFFF", "deepskyblue", 1,
+                    "#1E90FF", "dodgerblue", 0,
+                    "#6495ED", "cornflowerblue", 0,
+                    "#4169E1", "royalblue", 0,
+                    "#4682B4", "steelblue", 0,
+                    /* 青 B 00-00-FF */
+                    "#0000FF", "blue", 0,
+                    "#0000CD", "mediumblue", 0,
+                    "#00008B", "darkblue", 0,
+                    "#000080", "navy", 0,
+                    "#191970", "midnightblue", 0,
+                    "#483D8B", "darkslateblue", 0,
+                    "#6A5ACD", "slateblue", 0,
+                    "#7B68EE", "mediumslateblue", 0,
+                    "#9370DB", "mediumpurple", 0,
+                    "#4B0082", "indigo", 0,
+                    "#8A2BE2", "blueviolet", 0,
+                    "#9932CC", "darkorchid", 0,
+                    "#BA55D3", "mediumorchid", 0,
+                    "#9400D3", "darkviolet", 0,
+                    "#8B008B", "darkmagenta", 0,
+                    "#800080", "purple", 0,
+                    "#C71585", "mediumvioletred", 0,
+                    "#FF1493", "deeppink", 1,
+                    "#FF00FF", "fuchsia", 1,
+                    "#FF00FF", "magenta", 1,
+                    "#DA70D6", "orchid", 1,
+                    "#EE82EE", "violet", 1,
+                    "#FF69B4", "hotpink", 1,
+                    "#DDA0DD", "plum", 1,
+                    "#D8BFD8", "thistle", 1,
+                    "#FFF0F5", "lavenderblush", 1,
+                    /* 黒 */
+                    "#F8F8FF", "ghostwhite", 1,
+                    "#F5F5F5", "whitesmoke", 1,
+                    "#E6E6FA", "lavender", 1,
+                    "#B0C4DE", "lightsteelblue", 1,
+                    "#778899", "lightslategray", 0,
+                    "#708090", "slategray", 0,
+                    "#000000", "black", 0,
+                    "#696969", "dimgray", 0,
+                    "#808080", "gray", 1,
+                    "#A9A9A9", "darkgray", 1,
+                    "#C0C0C0", "silver", 1,
+                    "#D3D3D3", "lightgrey", 1,
+                    "#DCDCDC", "gainsboro", 1,
+                    "#FFFFFF", "white", 1
+                );
+                cnt = 0;
+                document.write("<table id='color_table'>");
+                document.write("<tr><td>");
+                document.write("<table align='center' class='tbl'>");
+                for (i = 0; i < 47; i++) {
+                    document.write("<tr><td style='white-space:nowrap;width:100px;font-size:10px;background-color:" + col[i * 3] + ";'>");
+                    if (col[i * 3 + 2] == 0) document.write("<span style='color:#FFDEAD;'>");
+                    else document.write("<span>");
+                    document.write(col[i * 3] + "<BR>(" + col[i * 3 + 1] + ")</span></td>");
+                    document.write("<td style='vertical-align:middle; background-color:" + col[i * 3] + ";'><form><input type='button' value='文字' onclick='fg(&quot;" + col[i * 3] + "&quot;,&quot;" + col[i * 3 + 1] + "&quot;)'></form></td>");
+                    document.write("<td style='vertical-align:middle; background-color:" + col[i * 3] + ";'><form><input type='button' value='背景' onclick='bg(&quot;" + col[i * 3] + "&quot;,&quot;" + col[i * 3 + 1] + "&quot;)'></form></td>");
+                    document.write("</tr>");
+                }
+                document.write("</table>");
+                document.write("</td><td>");
+                document.write("<table align='center' class='tbl'>");
+                for (i = 47; i < 94; i++) {
+                    document.write("<tr><td style='white-space:nowrap;width:100px;font-size:10px;background-color:" + col[i * 3] + ";'>");
+                    if (col[i * 3 + 2] == 0) document.write("<span style='color:#FFDEAD;'>");
+                    else document.write("<span>");
+                    document.write(col[i * 3] + "<BR>(" + col[i * 3 + 1] + ")</span></td>");
+                    document.write("<td style='vertical-align:middle; background-color:" + col[i * 3] + ";'><form><input type='button' value='文字' onclick='fg(&quot;" + col[i * 3] + "&quot;,&quot;" + col[i * 3 + 1] + "&quot;)'></form></td>");
+                    document.write("<td style='vertical-align:middle; background-color:" + col[i * 3] + ";'><form><input type='button' value='背景' onclick='bg(&quot;" + col[i * 3] + "&quot;,&quot;" + col[i * 3 + 1] + "&quot;)'></form></td>");
+                    document.write("</tr>");
+                }
+                document.write("</table>");
+                document.write("</td><td>");
+                document.write("<table align='center' class='tbl'>");
+                for (i = 94; i < 140; i++) {
+                    document.write("<tr><td style='white-space:nowrap;width:100px;font-size:10px;background-color:" + col[i * 3] + ";'>");
+                    if (col[i * 3 + 2] == 0) document.write("<span style='color:#FFDEAD;'>");
+                    else document.write("<span>");
+                    document.write(col[i * 3] + "<BR>(" + col[i * 3 + 1] + ")</span></td>");
+                    document.write("<td style='vertical-align:middle; background-color:" + col[i * 3] + ";'><form><input type='button' value='文字' onclick='fg(&quot;" + col[i * 3] + "&quot;,&quot;" + col[i * 3 + 1] + "&quot;)'></form></td>");
+                    document.write("<td style='vertical-align:middle; background-color:" + col[i * 3] + ";'><form><input type='button' value='背景' onclick='bg(&quot;" + col[i * 3] + "&quot;,&quot;" + col[i * 3 + 1] + "&quot;)'></form></td>");
+                    document.write("</tr>");
+                }
+                document.write("</table>");
+                document.write("</td></tr></table>");
+
+            </script>
+        </div>
+
+        <footer id="footer">
+            <p>2023 mac屋</p>
+        </footer>
+
+        <script src="js/main.js"></script>
+    </body>
+
+</html>
