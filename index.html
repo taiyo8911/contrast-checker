@@ -11,46 +11,46 @@
 
     <body>
         <header id="header" class="wrapper">
-            <h1>コントラストチェッカー140</h1>
-            <p>背景色と文字色を重ねてコントラストをチェックするアプリです。<br>
-                W3Cが提案する基準値である「明度差125以上」「色差500以上」の場合にOKを表示します。<br>
+            <h1>コントラストチェッカー</h1>
+            <p class="para">背景と文字のコントラストをチェックするアプリです。<br>
+                W3Cの基準値「明度差125、色差500」以上でOKを表示します。
             </p>
 
             <form id="form" name="fm">
-                <div class="tb-wrap">
+                <div>
                     <table id="result_table" border="1">
                         <tr>
                             <th></th>
                             <th>コード</th>
                             <th>名前</th>
-                            <th>R</th>
-                            <th>G</th>
-                            <th>B</th>
-                            <th>明度</th>
-                            <th>明度差</th>
+                            <th class="none">R</th>
+                            <th class="none">G</th>
+                            <th class="none">B</th>
+                            <th class="none">明度</th>
+                            <th style="font-size: 14px;">明度差</th>
                             <th>色差</th>
                             <th>判定</th>
                         </tr>
                         <tr>
-                            <td>背景色</td>
-                            <td><input type="text" name="bg"></td>
-                            <td><input type="text" name="bg2"></td>
-                            <td><input type="text" name="bg_r"></td>
-                            <td><input type="text" name="bg_g"></td>
-                            <td><input type="text" name="bg_b"></td>
-                            <td><input type="text" name="bg_brightness"></td>
-                            <td rowspan="2"><input type="text" name="brightness_difference"></td>
-                            <td rowspan="2"><input type="text" name="color_difference"></td>
+                            <td>背</td>
+                            <td><input type="text" name="bg_code" readonly></td>
+                            <td><input type="text" name="bg_name" readonly></td>
+                            <td class="none"><input type="text" name="bg_r" readonly></td>
+                            <td class="none"><input type="text" name="bg_g" readonly></td>
+                            <td class="none"><input type="text" name="bg_b" readonly></td>
+                            <td class="none"><input type="text" name="bg_brightness" readonly></td>
+                            <td rowspan="2"><input type="text" name="brightness_difference" readonly></td>
+                            <td rowspan="2"><input type="text" name="color_difference" readonly></td>
                             <td id="result" rowspan="2"></td>
                         </tr>
                         <tr>
-                            <td>文字色</td>
-                            <td><input type="text" name="fg"></td>
-                            <td><input type="text" name="fg2"></td>
-                            <td><input type="text" name="fg_r"></td>
-                            <td><input type="text" name="fg_g"></td>
-                            <td><input type="text" name="fg_b"></td>
-                            <td><input type="text" name="fg_brightness"></td>
+                            <td>文</td>
+                            <td><input type="text" name="fg_code" readonly></td>
+                            <td><input type="text" name="fg_name" readonly></td>
+                            <td class="none"><input type="text" name="fg_r" readonly></td>
+                            <td class="none"><input type="text" name="fg_g" readonly></td>
+                            <td class="none"><input type="text" name="fg_b" readonly></td>
+                            <td class="none"><input type="text" name="fg_brightness" readonly></td>
                         </tr>
                     </table>
                 </div>

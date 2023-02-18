@@ -1,8 +1,8 @@
 // 文字ボタン押下時の処理
 function fg(a, b) {
     document.getElementById("header").style.color = a;
-    document.fm.fg.value = a;
-    document.fm.fg2.value = b;
+    document.fm.fg_code.value = a;
+    document.fm.fg_name.value = b;
 
     // ヘッダーに設定されたスタイルを取得
     let element = document.getElementById("header");
@@ -50,7 +50,7 @@ function fg(a, b) {
     const rgb2 = [r2, g2, b2];
 
     const colorDifference = calculateColorDifference(...rgb1, ...rgb2);
-    console.log(colorDifference);
+    // console.log(colorDifference);
     document.fm.color_difference.value = colorDifference;
 
 
@@ -66,8 +66,8 @@ function fg(a, b) {
 // 背景ボタン押下時の処理
 function bg(a, b) {
     document.getElementById("header").style.backgroundColor = a;
-    document.fm.bg.value = a;
-    document.fm.bg2.value = b;
+    document.fm.bg_code.value = a;
+    document.fm.bg_name.value = b;
 
     let element = document.getElementById("header");
     let style = window.getComputedStyle(element);

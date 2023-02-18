@@ -8,6 +8,16 @@
     margin: 0 auto;
 }
 
+h1 {
+    text-align: center;
+}
+
+.para {
+    padding: 10px;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
 #header {
     position: sticky;
     position: -webkit-sticky;
@@ -29,13 +39,13 @@ input {
     width: 40px;
 }
 
-input[name="fg"],
-input[name="bg"] {
+input[name="fg_code"],
+input[name="bg_code"] {
     width: 60px;
 }
 
-input[name="fg2"],
-input[name="bg2"] {
+input[name="fg_name"],
+input[name="bg_name"] {
     width: 120px;
 }
 
@@ -48,4 +58,8 @@ input[name="bg2"] {
 .tb-wrap {
     width: 100%;
     overflow-x: scroll;
+}
+
+.none {
+    display: none;
 }
